@@ -27,6 +27,11 @@ jobs:
           motherduck_token: ${{ secrets.MOTHERDUCK_TOKEN }}
         run: python extract_data.py
 
+      - name: Instalar Dependencias de dbt
+        env:
+          motherduck_token: ${{ secrets.MOTHERDUCK_TOKEN }}
+        run: python -m dbt.cli.main deps --profiles-dir .
+
       - name: Ejecutar Transformación (dbt)
         env:
           motherduck_token: ${{ secrets.MOTHERDUCK_TOKEN }}
