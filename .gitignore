@@ -1,0 +1,19 @@
+# Bases de Datos (No se suben, se generan en el pipeline)
+*.db
+*.duckdb
+data/
+
+# dbt (Archivos temporales y compilados)
+target/
+dbt_packages/
+logs/
+
+# Python (Basura de ejecución y entornos virtuales)
+__pycache__/
+*.pyc
+venv/
+.env
+
+# Sistema
+.DS_Store
+Thumbs.db

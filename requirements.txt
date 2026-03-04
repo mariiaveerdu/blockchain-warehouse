@@ -1,0 +1,6 @@
+pandas
+requests
+duckdb
+matplotlib
+dbt-duckdb
+

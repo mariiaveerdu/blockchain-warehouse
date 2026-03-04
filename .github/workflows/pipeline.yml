@@ -1,0 +1,33 @@
+name: Crypto Cloud Pipeline
+
+on:
+  schedule:
+    - cron: '0 9 * * *' # Se ejecuta todos los días a las 09:00 UTC
+  workflow_dispatch:   # Permite que tú lo ejecutes a mano con un botón
+
+jobs:
+  run_pipeline:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v3
+
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Instalar dependencias
+        run: |
+          pip install requests pandas duckdb python-dotenv dbt-duckdb
+
+      - name: Ejecutar Ingesta (Python)
+        env:
+          motherduck_token: ${{ secrets.MOTHERDUCK_TOKEN }}
+        run: python extract_data.py
+
+      - name: Ejecutar Transformación (dbt)
+        env:
+          motherduck_token: ${{ secrets.MOTHERDUCK_TOKEN }}
+        run: python -m dbt.cli.main run --profiles-dir .

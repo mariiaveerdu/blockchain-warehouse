@@ -1,0 +1,21 @@
+version: 2
+
+models:
+  - name: stg_crypto_prices
+    description: "Capa de limpieza inicial de los datos de la API."
+    columns:
+      - name: coin_name
+        tests:
+          - not_null  # El nombre de la moneda nunca puede estar vacío
+      - name: price_usd
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+
+  - name: mart_crypto_stats
+    description: "Estadísticas acumuladas de cada criptomoneda."
+    columns:
+      - name: coin_name
+        tests:
+          - unique # Solo debería haber una fila por moneda en esta tabla
