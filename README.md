@@ -52,7 +52,32 @@ Reliability is managed through a GitHub Actions workflow acting as a gatekeeper.
 
 ---
 
-## 📊 5. Key Results
+## 📊5.  Business Intelligence Interface (Streamlit)
+
+The final layer of the platform is an interactive BI Dashboard designed for financial analysis. It serves as the primary interface for stakeholders to monitor market movements backed by validated data.
+
+
+
+### 💡 Key Analytical Features:
+* **Real-Time Market KPIs:** Instant visibility into Bitcoin (BTC) performance and global market volatility metrics, sourced directly from the Gold layer of the data warehouse.
+* **Dynamic Performance Tracking:** An interactive "Top Gainers" visualization that identifies assets with the highest 24h appreciation, allowing for rapid trend identification.
+* **Data Auditability:** A dedicated "Raw Data Inspection" module that displays the most recent ingestion timestamps, ensuring full transparency of the data lineage.
+* **Responsive Design:** Optimized for both desktop and mobile viewing to ensure accessibility for on-the-go market monitoring.
+
+### 🛡️ Data Reliability Guarantee
+Every data point displayed on this dashboard has undergone a **triple-validation process**:
+1.  **Ingestion Check:** Verified successful API handshake.
+2.  **Schema Enforcement:** dbt-tested for null values and unique constraints.
+3.  **Business Logic Guardrails:** Automated rejection of outlier or corrupted price values via `dbt-utils` ranges.
+
+---
+
+## 🔗 Access the Live Environment
+The production environment is hosted on Streamlit Cloud and is automatically synchronized with the MotherDuck warehouse.
+
+👉 **[Launch Live Dashboard](https://blockchain-warehouse.streamlit.app/)**
+
+## 📊 6. Key Results
 * **100% Automation:** Elimination of manual intervention for daily market updates.
 * **Zero-Corruption Policy:** 100% of the visualized data is verified through automated quality gates.
 * **Infrastructure-as-Code:** The entire pipeline, from ingestion to testing, is version-controlled and reproducible.
