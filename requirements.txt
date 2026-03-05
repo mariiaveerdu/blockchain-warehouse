@@ -1,6 +1,7 @@
 pandas
 requests
 duckdb
+streamlit
 matplotlib
 dbt-duckdb
 
