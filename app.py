@@ -32,4 +32,12 @@ else:
 
     # Tabla de datos
     st.subheader("Datos Detallados")
-    st.dataframe(df[['coin_name', 'price_usd', 'pct_change', 'extracted_at']], use_container_width=True)
+    
+    # Definimos las columnas que estamos SEGUROS que existen
+    columnas_disponibles = [col for col in ['coin_name', 'price_usd', 'pct_change'] if col in df.columns]
+    
+    if columnas_disponibles:
+        st.dataframe(df[columnas_disponibles], use_container_width=True)
+    else:
+        # Si por lo que sea fallan las anteriores, mostramos toda la tabla
+        st.dataframe(df, use_container_width=True)
