@@ -1,21 +1,50 @@
 version: 2
 
 models:
+  # 1. Raw Data Layer (Staging)
   - name: stg_crypto_prices
-    description: "Capa de limpieza inicial de los datos de la API."
+    description: "Initial cleaning and type casting of the raw API data."
     columns:
       - name: coin_name
+        description: "The full name of the cryptocurrency."
         tests:
-          - not_null  # El nombre de la moneda nunca puede estar vacío
+          - not_null
       - name: price_usd
+        description: "Current price in USD."
         tests:
           - not_null
           - dbt_utils.accepted_range:
               min_value: 0
+      - name: pct_change
+        description: "24h price percentage change."
+        tests:
+          - not_null
 
+  # 2. Mart Layer: General Stats
   - name: mart_crypto_stats
-    description: "Estadísticas acumuladas de cada criptomoneda."
+    description: "Aggregated statistics for each tracked cryptocurrency."
+    columns:
+      - name: coin_name
+        description: "Primary key for the stats table."
+        tests:
+          - not_null
+          - unique
+
+  # 3. Mart Layer: Dashboard Overview
+  - name: mart_crypto_overview
+    description: "Simplified table for the top-level KPIs in the Streamlit app."
     columns:
       - name: coin_name
         tests:
-          - unique # Solo debería haber una fila por moneda en esta tabla
+          - not_null
+
+  # 4. Mart Layer: Trends and Analysis
+  - name: mart_crypto_trends
+    description: "The main table used by the Streamlit dashboard for visualizations."
+    columns:
+      - name: coin_name
+        tests:
+          - not_null
+      - name: price_usd
+        tests:
+          - not_null

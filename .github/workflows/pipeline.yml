@@ -2,8 +2,8 @@ name: Crypto Cloud Pipeline
 
 on:
   schedule:
-    - cron: '0 9 * * *' # Se ejecuta todos los días a las 09:00 UTC
-  workflow_dispatch:   # Permite que tú lo ejecutes a mano con un botón
+    - cron: '0 9 * * *' 
+  workflow_dispatch:   
 
 jobs:
   run_pipeline:
@@ -27,13 +27,18 @@ jobs:
           motherduck_token: ${{ secrets.MOTHERDUCK_TOKEN }}
         run: python extract_data.py
 
-      - name: Instalar Dependencias de dbt
+      - name: Install dbt Dependencies
         env:
           motherduck_token: ${{ secrets.MOTHERDUCK_TOKEN }}
         run: python -m dbt.cli.main deps --profiles-dir .
 
-      - name: Ejecutar Transformación (dbt)
+      - name: 🧪 Run Data Tests (CI)
         env:
           motherduck_token: ${{ secrets.MOTHERDUCK_TOKEN }}
-        # Añadimos "|| true" para que ignore el error de segmentación al final
+        run: python -m dbt.cli.main test --profiles-dir .
+
+      - name: 🚀 Deploy Transformations (CD)
+        env:
+          motherduck_token: ${{ secrets.MOTHERDUCK_TOKEN }}
+        
         run: python -m dbt.cli.main run --profiles-dir . || true
