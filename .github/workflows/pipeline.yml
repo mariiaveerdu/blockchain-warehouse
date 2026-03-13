@@ -33,6 +33,12 @@ jobs:
           motherduck_token: ${{ secrets.MOTHERDUCK_TOKEN }}
         run: python -m dbt.cli.main deps --profiles-dir .
 
+      - name: Ejecutar dbt
+        run: |
+          dbt clean          
+          dbt deps            
+          dbt build
+
       - name: 🧪 Run Data Tests (CI)
         env:
           motherduck_token: ${{ secrets.MOTHERDUCK_TOKEN }}

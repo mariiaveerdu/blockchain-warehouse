@@ -30,7 +30,8 @@ clean-targets:         # directories to be removed by `dbt clean`
 # directory as views. These settings can be overridden in the individual model
 # files using the `{{ config(...) }}` macro.
 models:
-  crypto_project:
-    # Config indicated by + and applies to all files under models/example/
-    example:
+  blockchain_warehouse:
+    staging:
       +materialized: view
+    marts:
+      +materialized: table
