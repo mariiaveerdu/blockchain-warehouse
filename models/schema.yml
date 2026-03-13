@@ -14,7 +14,8 @@ models:
         tests:
           - not_null
           - dbt_utils.accepted_range:
-              min_value: 0
+              arguments:
+                min_value: 0
 
   # 2. Mart Layer: General Stats
   - name: mart_crypto_stats
