@@ -34,7 +34,10 @@ jobs:
         env:
           MOTHERDUCK_TOKEN: ${{ secrets.MOTHERDUCK_TOKEN }}
         run: |
-          # Cambiamos "python -m dbt" por "python -m dbt.cli.main"
+          
+          rm -rf dbt_packages
+          
+          # Usamos la ruta completa al ejecutable
           python -m dbt.cli.main clean --profiles-dir .
           python -m dbt.cli.main deps --profiles-dir .
           python -m dbt.cli.main build --profiles-dir .
