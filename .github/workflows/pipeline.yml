@@ -20,8 +20,9 @@ jobs:
 
       - name: Instalar dependencias
         run: |
+          pip uninstall dbt-core dbt-duckdb -y
           pip install requests pandas python-dotenv
-          pip install duckdb==1.4.4 dbt-duckdb==1.8.2 --force-reinstall
+          pip install dbt-duckdb==1.8.2 duckdb==1.4.4 --force-reinstall
 
       - name: Ejecutar Ingesta (Python)
         env:
