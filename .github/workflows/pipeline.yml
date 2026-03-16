@@ -34,7 +34,7 @@ jobs:
         env:
           MOTHERDUCK_TOKEN: ${{ secrets.MOTHERDUCK_TOKEN }}
         run: |
-          # Usamos siempre python -m dbt para evitar la v1.11.7 de GitHub
-          python -m dbt clean --profiles-dir .
-          python -m dbt deps --profiles-dir .
-          python -m dbt build --profiles-dir .
+          # Cambiamos "python -m dbt" por "python -m dbt.cli.main"
+          python -m dbt.cli.main clean --profiles-dir .
+          python -m dbt.cli.main deps --profiles-dir .
+          python -m dbt.cli.main build --profiles-dir .
