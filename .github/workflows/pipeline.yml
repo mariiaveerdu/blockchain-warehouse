@@ -34,6 +34,8 @@ jobs:
         run: python -m dbt.cli.main deps --profiles-dir .
 
       - name: Ejecutar dbt
+        env:
+          MOTHERDUCK_TOKEN: ${{ secrets.MOTHERDUCK_TOKEN }}
         run: |
           dbt clean          
           dbt deps            

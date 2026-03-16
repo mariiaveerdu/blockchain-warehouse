@@ -1,9 +1,9 @@
-blockchain_warehouse: # O el nombre que tenga tu proyecto
+blockchain_warehouse: 
   target: dev
   outputs:
     dev:
       type: duckdb
-      # Ponemos el token directamente en el path como una variable de conexión
-      path: "md:crypto_db?motherduck_token={{ env_var('motherduck_token') }}"
+      
+      path: "md:crypto_db?motherduck_token={{ env_var('MOTHERDUCK_TOKEN') }}" }}"
       extensions:
         - motherduck
