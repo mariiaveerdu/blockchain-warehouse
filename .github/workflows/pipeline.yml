@@ -20,35 +20,21 @@ jobs:
 
       - name: Instalar dependencias
         run: |
-          pip uninstall dbt-core dbt-duckdb -y  
+          pip uninstall dbt-core dbt-duckdb -y
           pip install requests pandas python-dotenv
-          pip install dbt-duckdb==1.8.2 duckdb==1.4.4 --force-reinstall
+          # Instalamos dbt-core explícitamente para asegurar la versión
+          pip install dbt-core==1.8.2 dbt-duckdb==1.8.2 duckdb==1.4.4 --force-reinstall
 
       - name: Ejecutar Ingesta (Python)
         env:
-          motherduck_token: ${{ secrets.MOTHERDUCK_TOKEN }}
+          MOTHERDUCK_TOKEN: ${{ secrets.MOTHERDUCK_TOKEN }}
         run: python extract_data.py
 
-      - name: Install dbt Dependencies
-        env:
-          motherduck_token: ${{ secrets.MOTHERDUCK_TOKEN }}
-        run: python -m dbt.cli.main deps --profiles-dir .
-
-      - name: Ejecutar dbt
+      - name: Ejecutar dbt (Clean, Deps, Build)
         env:
           MOTHERDUCK_TOKEN: ${{ secrets.MOTHERDUCK_TOKEN }}
         run: |
-          dbt clean          
-          dbt deps            
-          dbt build
-
-      - name: 🧪 Run Data Tests (CI)
-        env:
-          motherduck_token: ${{ secrets.MOTHERDUCK_TOKEN }}
-        run: python -m dbt.cli.main test --profiles-dir .
-
-      - name: 🚀 Deploy Transformations (CD)
-        env:
-          motherduck_token: ${{ secrets.MOTHERDUCK_TOKEN }}
-        
-        run: python -m dbt.cli.main run --profiles-dir . || true
+          # Usamos siempre python -m dbt para evitar la v1.11.7 de GitHub
+          python -m dbt clean --profiles-dir .
+          python -m dbt deps --profiles-dir .
+          python -m dbt build --profiles-dir .
