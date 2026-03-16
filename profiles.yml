@@ -4,6 +4,6 @@ blockchain_warehouse:
     dev:
       type: duckdb
       
-      path: "md:crypto_db?motherduck_token={{ env_var('MOTHERDUCK_TOKEN') }}" }}"
+      path: "md:crypto_db?motherduck_token={{ env_var('MOTHERDUCK_TOKEN') }}"
       extensions:
         - motherduck
